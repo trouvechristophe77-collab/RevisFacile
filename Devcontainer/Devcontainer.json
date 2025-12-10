@@ -1,0 +1,22 @@
+{
+    "name": "Flutter/Dart Development",
+    "image": "ghcr.io/devcontainers/universal:latest",
+
+    // Commande exécutée pour installer Flutter après la création de l'environnement
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y git wget unzip && git clone https://github.com/flutter/flutter.git /opt/flutter && /opt/flutter/bin/flutter precache",
+
+    "remoteUser": "root",
+    "containerUser": "root",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Dart-Code.dart-code",
+                "Dart-Code.flutter"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    }
+}
