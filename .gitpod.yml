@@ -1,0 +1,39 @@
+# Définit l'image de base qui sera utilisée. 'workspace-full' contient un environnement Linux complet.
+image: gitpod/workspace-full
+
+# Cette section définit les tâches à exécuter au lancement de l'espace de travail.
+tasks:
+  - name: Initialisation Flutter et Projet
+    init: |
+      # 1. Télécharge et configure Flutter (remplacez par une version stable si besoin)
+      FLUTTER_VERSION="3.16.0" 
+      git clone https://github.com/flutter/flutter.git -b $FLUTTER_VERSION
+      export PATH="$PATH:/workspace/flutter/bin"
+      flutter precache
+      
+      # 2. Crée le projet s'il n'existe pas encore
+      if [ ! -d "revis_facile" ]; then
+        flutter create revis_facile
+      fi
+      
+      # 3. Ajoute les packages nécessaires (SQLite, etc.) à votre projet
+      cd revis_facile
+      flutter pub add sqflite path_provider intl
+      cd ..
+      
+      # 4. Nettoyage initial et lancement
+      flutter doctor # Pour vérifier que tout est OK
+      
+    # Commande à exécuter une fois que tout est prêt : ouvre le dossier du projet dans l'éditeur.
+    command: code revis_facile
+
+# Personnalisation de l'interface VS Code
+vscode:
+  extensions:
+    - Dart-Code.dart-code
+    - Dart-Code.flutter
+
+# Configure les ports (utile si vous voulez visualiser l'application compilée en mode web)
+ports:
+  - port: 8080
+    onOpen: open-browser
